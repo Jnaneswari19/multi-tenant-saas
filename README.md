@@ -38,6 +38,11 @@ multi-tenant-saas/
 ├── backend/
 ├── frontend/
 ├── docs/
+│   ├── research.md
+│   ├── PRD.md
+│   ├── architecture.md
+│   ├── technical-spec.md
+│   ├── api-docs.md
 │   └── screenshots/
 ├── docker-compose.yml
 ├── .env
@@ -51,7 +56,7 @@ multi-tenant-saas/
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/your-username/multi-tenant-saas.git
+git clone https://github.com/Jnaneswari19/multi-tenant-saas.git
 cd multi-tenant-saas
 ```
 
@@ -95,22 +100,6 @@ docker-compose up --build
 
 ---
 
-## 🔎 Typical Frontend README Content
-When you scaffold a React app (e.g., with `create-react-app`), the `frontend/README.md` usually contains boilerplate like:
-
-- How to run the app with `npm start`
-- How to build with `npm run build`
-- How to run tests with `npm test`
-- Notes about serving on `http://localhost:3000`
-
-Since your root README already covers Docker setup and ports, we only need to preserve **standalone frontend instructions** for developers who might want to run React outside Docker.
-
----
-
-## ✅ Merged Section for Root README
-Add this to your root `README.md` under a new section:
-
-```markdown
 ## 🖥️ Frontend Notes
 
 If you want to run the frontend separately (without Docker):
@@ -146,11 +135,18 @@ If you want to run the frontend separately (without Docker):
    ```
 
 > ⚠️ Note: When running standalone, ensure your backend is running at `http://localhost:5000` so the frontend can connect to the API.
-```
-
 
 ---
 
+## 📚 Documentation
+
+- [Research Document](docs/research.md)  
+- [Product Requirements Document (PRD)](docs/PRD.md)  
+- [Architecture Document](docs/architecture.md)  
+- [Technical Specification](docs/technical-spec.md)  
+- [API Documentation](docs/api-docs.md)  
+
+---
 
 ## 📸 Proof Screenshots
 
@@ -242,4 +238,3 @@ Feel free to reach out for collaboration or feedback!
 ```
 
 ---
-
