@@ -1,80 +1,64 @@
+
 # Product Requirements Document (PRD)
 
-## 1. User Personas
+## User Personas
 
 ### Super Admin
-- **Role Description:** System-level administrator with access to all tenants.
-- **Key Responsibilities:**
-  - Manage tenant registrations and subscriptions
-  - Monitor system health and audit logs
-  - Suspend or activate tenants
-- **Main Goals:**
-  - Ensure smooth operation of the platform
-  - Maintain compliance and security
-- **Pain Points:**
-  - Needs global visibility across all tenants
-  - Must prevent misuse or abuse of the system
+- **Role:** System‑level administrator
+- **Responsibilities:** Manage all tenants, oversee system health
+- **Goals:** Ensure uptime, compliance, and smooth operations
+- **Pain Points:** Complexity of multi‑tenant oversight, balancing resources across tenants
 
 ### Tenant Admin
-- **Role Description:** Organization administrator with full control over their tenant.
-- **Key Responsibilities:**
-  - Manage users within their tenant
-  - Create and manage projects
-  - Enforce subscription plan limits
-- **Main Goals:**
-  - Efficiently onboard and manage teams
-  - Ensure projects are delivered on time
-- **Pain Points:**
-  - Needs simple onboarding process
-  - Must balance plan limits with organizational needs
+- **Role:** Organization administrator
+- **Responsibilities:** Manage users, projects, and subscription plan
+- **Goals:** Efficient team management, maximize productivity
+- **Pain Points:** Subscription limits, onboarding new users
 
 ### End User
-- **Role Description:** Regular team member with limited permissions.
-- **Key Responsibilities:**
-  - Work on assigned tasks
-  - Collaborate with team members
-- **Main Goals:**
-  - Complete tasks efficiently
-  - Access project information easily
-- **Pain Points:**
-  - Needs a simple, intuitive UI
-  - Limited access may restrict visibility
+- **Role:** Team member
+- **Responsibilities:** Work on assigned tasks within projects
+- **Goals:** Complete tasks efficiently, collaborate with teammates
+- **Pain Points:** Limited permissions, dependency on admins for access
 
 ---
 
-## 2. Functional Requirements
+## Functional Requirements
 
-### Authentication & Authorization
-- FR-001: The system shall allow tenant registration with unique subdomain.
-- FR-002: The system shall allow JWT-based authentication.
-- FR-003: The system shall enforce role-based access control.
+### Auth
+- FR‑001: The system shall allow tenant registration with unique subdomain.  
+- FR‑002: The system shall allow user login with JWT.  
+- FR‑003: The system shall allow logout.  
 
-### Tenant Management
-- FR-004: The system shall isolate tenant data completely.
-- FR-005: The system shall enforce subscription plan limits.
-- FR-006: The system shall allow super admin to suspend tenants.
+### Tenant
+- FR‑004: The system shall allow tenant admins to update tenant details.  
+- FR‑005: The system shall allow super admins to list all tenants.  
 
-### User Management
-- FR-007: The system shall allow tenant admins to invite users.
-- FR-008: The system shall enforce unique email per tenant.
-- FR-009: The system shall allow password reset via email.
+### User
+- FR‑006: The system shall allow tenant admins to add users.  
+- FR‑007: The system shall allow listing users per tenant.  
+- FR‑008: The system shall allow updating user details.  
+- FR‑009: The system shall allow deleting users.  
 
-### Project Management
-- FR-010: The system shall allow project creation per tenant.
-- FR-011: The system shall allow project status updates (active, archived, completed).
-- FR-012: The system shall allow tenant admins to delete projects.
+### Project
+- FR‑010: The system shall allow creating projects.  
+- FR‑011: The system shall allow listing projects.  
+- FR‑012: The system shall allow updating projects.  
+- FR‑013: The system shall allow deleting projects.  
 
-### Task Management
-- FR-013: The system shall allow task creation under projects.
-- FR-014: The system shall allow task assignment to users.
-- FR-015: The system shall allow task status updates (todo, in_progress, completed).
+### Task
+- FR‑014: The system shall allow creating tasks.  
+- FR‑015: The system shall allow updating task status.  
 
 ---
 
-## 3. Non-Functional Requirements
+## Non‑Functional Requirements
 
-- NFR-001: API response time shall be <200ms for 90% of requests.
-- NFR-002: JWT tokens shall expire after 24 hours.
-- NFR-003: The system shall support at least 100 concurrent users.
-- NFR-004: The system shall maintain 99% uptime.
-- NFR-005: The frontend shall be mobile responsive.
+- NFR‑001: API response time < 200ms for 90% of requests.  
+- NFR‑002: All passwords must be hashed using bcrypt.  
+- NFR‑003: Support minimum 100 concurrent users.  
+- NFR‑004: Ensure 99% uptime target.  
+- NFR‑005: Provide mobile responsive design for all frontend pages.  
+```
+
+---

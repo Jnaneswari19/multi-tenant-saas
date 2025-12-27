@@ -1,93 +1,60 @@
+# Product Requirements Document (PRD)
 
-## 1. Multi-Tenancy Analysis
+## User Personas
 
-### Approach 1: Shared Database + Shared Schema
-- **Pros:**
-  - Cost-effective and easy to manage
-  - Simple deployment and scaling
-  - Single schema reduces overhead
-- **Cons:**
-  - Complex isolation logic required
-  - Higher risk of accidental data leaks
-  - Harder to enforce strict compliance
+### Super Admin
+- **Role:** System‑level administrator
+- **Responsibilities:** Manage all tenants, oversee system health
+- **Goals:** Ensure uptime, compliance, and smooth operations
+- **Pain Points:** Complexity of multi‑tenant oversight, balancing resources across tenants
 
-### Approach 2: Shared Database + Separate Schema
-- **Pros:**
-  - Better isolation compared to shared schema
-  - Easier to enforce tenant-specific constraints
-  - Moderate complexity in management
-- **Cons:**
-  - Schema proliferation with many tenants
-  - More complex migrations and upgrades
-  - Performance tuning harder across multiple schemas
+### Tenant Admin
+- **Role:** Organization administrator
+- **Responsibilities:** Manage users, projects, and subscription plan
+- **Goals:** Efficient team management, maximize productivity
+- **Pain Points:** Subscription limits, onboarding new users
 
-### Approach 3: Separate Database per Tenant
-- **Pros:**
-  - Strongest isolation and security
-  - Easier compliance with regulations
-  - Independent scaling per tenant
-- **Cons:**
-  - Expensive in terms of resources
-  - Difficult to maintain and upgrade
-  - Complex orchestration for many tenants
-
-### Chosen Approach
-We will use **Shared Database + Shared Schema with tenant_id column**.  
-This balances scalability, cost, and isolation. Each record will be tagged with `tenant_id`, ensuring strict separation of data while keeping infrastructure manageable.
+### End User
+- **Role:** Team member
+- **Responsibilities:** Work on assigned tasks within projects
+- **Goals:** Complete tasks efficiently, collaborate with teammates
+- **Pain Points:** Limited permissions, dependency on admins for access
 
 ---
 
-## 2. Technology Stack Justification
+## Functional Requirements
 
-### Backend Framework
-- **Chosen:** Node.js with Express
-- **Reason:** Lightweight, fast, large ecosystem, easy REST API development
-- **Alternatives Considered:** Django (Python), Spring Boot (Java)
+### Auth
+- FR‑001: The system shall allow tenant registration with unique subdomain.  
+- FR‑002: The system shall allow user login with JWT.  
+- FR‑003: The system shall allow logout.  
 
-### Frontend Framework
-- **Chosen:** React
-- **Reason:** Component-based, responsive UI, strong community support
-- **Alternatives Considered:** Angular, Vue.js
+### Tenant
+- FR‑004: The system shall allow tenant admins to update tenant details.  
+- FR‑005: The system shall allow super admins to list all tenants.  
 
-### Database
-- **Chosen:** PostgreSQL
-- **Reason:** Robust relational DB, supports constraints, indexes, transactions
-- **Alternatives Considered:** MySQL, MongoDB
+### User
+- FR‑006: The system shall allow tenant admins to add users.  
+- FR‑007: The system shall allow listing users per tenant.  
+- FR‑008: The system shall allow updating user details.  
+- FR‑009: The system shall allow deleting users.  
 
-### Authentication Method
-- **Chosen:** JWT (JSON Web Tokens)
-- **Reason:** Stateless, scalable, widely adopted
-- **Alternatives Considered:** Session-based authentication
+### Project
+- FR‑010: The system shall allow creating projects.  
+- FR‑011: The system shall allow listing projects.  
+- FR‑012: The system shall allow updating projects.  
+- FR‑013: The system shall allow deleting projects.  
 
-### Deployment Platform
-- **Chosen:** Docker + Docker Compose
-- **Reason:** Portable, reproducible environments, one-command deployment
-- **Alternatives Considered:** Manual VM setup, Kubernetes (future scaling)
+### Task
+- FR‑014: The system shall allow creating tasks.  
+- FR‑015: The system shall allow updating task status.  
 
 ---
 
-## 3. Security Considerations
+## Non‑Functional Requirements
 
-1. **Data Isolation Strategy**
-   - Every record tagged with `tenant_id`
-   - Super Admin users have `tenant_id = NULL`
-   - Strict API-level checks to prevent cross-tenant access
-
-2. **Authentication & Authorization**
-   - JWT-based authentication with 24-hour expiry
-   - Role-based access control (Super Admin, Tenant Admin, User)
-   - Protected routes enforced at API level
-
-3. **Password Hashing**
-   - Use bcrypt or argon2 for secure password storage
-   - Enforce strong password policies
-
-4. **API Security Measures**
-   - Input validation and sanitization
-   - Rate limiting to prevent abuse
-   - CORS configuration to allow only frontend domain
-   - HTTPS for secure communication
-
-5. **Audit Logging**
-   - All critical actions logged in `audit_logs` table
-   - Includes user, tenant, action type, timestamp, and IP address
+- NFR‑001: API response time < 200ms for 90% of requests.  
+- NFR‑002: All passwords must be hashed using bcrypt.  
+- NFR‑003: Support minimum 100 concurrent users.  
+- NFR‑004: Ensure 99% uptime target.  
+- NFR‑005: Provide mobile responsive design for all frontend pages.  
