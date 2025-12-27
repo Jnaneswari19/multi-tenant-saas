@@ -388,6 +388,68 @@ Runs at `http://localhost:3000`.
 
 ---
 
+
+## 📄 README Snippet (Sample curl Commands)
+
+```markdown
+## 📡 Quick API Validation (curl examples)
+
+After running migrations and seeds, you can validate the backend with these curl commands:
+
+### 1. Login as Admin
+```bash
+curl -X POST http://localhost:5000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@demo.com","password":"Demo@123","tenantSubdomain":"demo"}'
+```
+
+> Returns a JWT token. Copy the `"token"` value for use in the next requests.
+
+---
+
+### 2. Get Tenant Details
+```bash
+curl -X GET http://localhost:5000/api/tenants/<TENANT_ID> \
+  -H "Authorization: Bearer <JWT_TOKEN>"
+```
+
+---
+
+### 3. List Users
+```bash
+curl -X GET http://localhost:5000/api/tenants/<TENANT_ID>/users \
+  -H "Authorization: Bearer <JWT_TOKEN>"
+```
+
+---
+
+### 4. List Projects
+```bash
+curl -X GET http://localhost:5000/api/projects \
+  -H "Authorization: Bearer <JWT_TOKEN>"
+```
+
+---
+
+### 5. List Tasks
+```bash
+curl -X GET http://localhost:5000/api/projects/<PROJECT_ID>/tasks \
+  -H "Authorization: Bearer <JWT_TOKEN>"
+```
+
+---
+
+✅ These commands confirm that:
+- Tenant **Demo Company** exists.  
+- Admin user **admin@demo.com** is seeded.  
+- Project **Demo Project** is available.  
+- Tasks **Demo Task 1** and **Demo Task 2** are returned.  
+```
+
+---
+
+
+
 ## 🧼 Cleanup
 
 ```bash
