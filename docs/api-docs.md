@@ -1,10 +1,4 @@
-Got it, Jnaneswari 👌 — here’s the **complete `docs/api-docs.md` file** with all 19 endpoints fully expanded, including request and response examples. You can copy‑paste this directly into your repo:
 
----
-
-## 📄 File: `docs/api-docs.md`
-
-```markdown
 # API Documentation
 
 All APIs return a consistent format:
@@ -22,8 +16,6 @@ All APIs return a consistent format:
 
 ### 1. Register Tenant
 **POST** `/api/auth/register-tenant`
-
-Registers a new tenant and admin user.
 
 **Request:**
 ```json
@@ -60,8 +52,6 @@ Registers a new tenant and admin user.
 ### 2. Login
 **POST** `/api/auth/login`
 
-Authenticates a user and returns JWT.
-
 **Request:**
 ```json
 { "email": "admin@demo.com", "password": "Demo@123", "tenantSubdomain": "demo" }
@@ -89,8 +79,6 @@ Authenticates a user and returns JWT.
 ### 3. Get Current User
 **GET** `/api/auth/me`
 
-Requires JWT.
-
 **Response (200):**
 ```json
 {
@@ -104,12 +92,15 @@ Requires JWT.
 }
 ```
 
+**Error (404):**
+```json
+{ "success": false, "message": "User not found" }
+```
+
 ---
 
 ### 4. Logout
 **POST** `/api/auth/logout`
-
-Invalidates session or JWT.
 
 **Response (200):**
 ```json
@@ -140,6 +131,11 @@ Invalidates session or JWT.
 }
 ```
 
+**Error (403):**
+```json
+{ "success": false, "message": "Unauthorized access" }
+```
+
 ---
 
 ### 6. Update Tenant
@@ -153,6 +149,11 @@ Invalidates session or JWT.
 **Response (200):**
 ```json
 { "success": true, "message": "Tenant updated successfully" }
+```
+
+**Error (403):**
+```json
+{ "success": false, "message": "Tenant admin cannot update subscription plan" }
 ```
 
 ---
@@ -173,6 +174,11 @@ Invalidates session or JWT.
 }
 ```
 
+**Error (403):**
+```json
+{ "success": false, "message": "Only super_admin can list all tenants" }
+```
+
 ---
 
 ## 👥 User Management
@@ -188,6 +194,11 @@ Invalidates session or JWT.
 **Response (201):**
 ```json
 { "success": true, "message": "User created successfully", "data": { "id": "uuid", "email": "newuser@demo.com" } }
+```
+
+**Error (409):**
+```json
+{ "success": false, "message": "Email already exists in this tenant" }
 ```
 
 ---
@@ -208,6 +219,11 @@ Invalidates session or JWT.
 }
 ```
 
+**Error (403):**
+```json
+{ "success": false, "message": "Unauthorized to view users of another tenant" }
+```
+
 ---
 
 ### 10. Update User
@@ -223,6 +239,11 @@ Invalidates session or JWT.
 { "success": true, "message": "User updated successfully" }
 ```
 
+**Error (403):**
+```json
+{ "success": false, "message": "You cannot update another tenant's user" }
+```
+
 ---
 
 ### 11. Delete User
@@ -231,6 +252,11 @@ Invalidates session or JWT.
 **Response (200):**
 ```json
 { "success": true, "message": "User deleted successfully" }
+```
+
+**Error (403):**
+```json
+{ "success": false, "message": "Tenant admin cannot delete themselves" }
 ```
 
 ---
@@ -250,6 +276,11 @@ Invalidates session or JWT.
 { "success": true, "data": { "id": "uuid", "name": "Website Redesign", "status": "active" } }
 ```
 
+**Error (403):**
+```json
+{ "success": false, "message": "Project limit reached for current subscription plan" }
+```
+
 ---
 
 ### 13. List Projects
@@ -267,6 +298,11 @@ Invalidates session or JWT.
 }
 ```
 
+**Error (404):**
+```json
+{ "success": false, "message": "No projects found for this tenant" }
+```
+
 ---
 
 ### 14. Update Project
@@ -282,6 +318,11 @@ Invalidates session or JWT.
 { "success": true, "message": "Project updated successfully" }
 ```
 
+**Error (403):**
+```json
+{ "success": false, "message": "Only tenant_admin or project creator can update project" }
+```
+
 ---
 
 ### 15. Delete Project
@@ -290,6 +331,11 @@ Invalidates session or JWT.
 **Response (200):**
 ```json
 { "success": true, "message": "Project deleted successfully" }
+```
+
+**Error (404):**
+```json
+{ "success": false, "message": "Project not found" }
 ```
 
 ---
@@ -309,6 +355,11 @@ Invalidates session or JWT.
 { "success": true, "data": { "id": "uuid", "title": "Design homepage mockup", "status": "todo" } }
 ```
 
+**Error (400):**
+```json
+{ "success": false, "message": "Assigned user does not belong to this tenant" }
+```
+
 ---
 
 ### 17. List Tasks
@@ -324,51 +375,3 @@ Invalidates session or JWT.
       { "id": "uuid", "title": "Implement login page", "status": "in_progress" }
     ]
   }
-}
-```
-
----
-
-### 18. Update Task Status
-**PATCH** `/api/tasks/:id/status`
-
-**Request:**
-```json
-{ "status": "completed" }
-```
-
-**Response (200):**
-```json
-{ "success": true, "message": "Task status updated", "data": { "id": "uuid", "status": "completed" } }
-```
-
----
-
-### 19. Update Task Details
-**PUT** `/api/tasks/:id`
-
-**Request:**
-```json
-{ "title": "Updated Task Title", "priority": "medium" }
-```
-
-**Response (200):**
-```json
-{ "success": true, "message": "Task updated successfully" }
-```
-
----
-
-## 🩺 Health Check
-
-### Health Endpoint
-**GET** `/api/health`
-
-**Response:**
-```json
-{ "system": "ok", "db": "connected" }
-```
-```
-
-
-

@@ -238,3 +238,176 @@ Feel free to reach out for collaboration or feedback!
 ```
 
 ---
+Perfect, Jnaneswari 👌 — since your `api-docs.md` is now updated with error responses, here’s the **ready‑to‑copy updated `README.md`** that includes **summaries for each documentation file** so reviewers know what to expect before clicking:
+
+---
+
+## 📄 Updated `README.md`
+
+```markdown
+# 🏢 Multi-Tenant SaaS Platform
+
+![Docker](https://img.shields.io/badge/Docker-Ready-blue)
+![Postgres](https://img.shields.io/badge/Postgres-16-green)
+![React](https://img.shields.io/badge/React-Frontend-blue)
+![Node.js](https://img.shields.io/badge/Node.js-Backend-green)
+
+A portfolio‑ready full‑stack SaaS platform 🏢 featuring multi‑tenant architecture, role‑based access control, and project/task management. Built with Docker, PostgreSQL, Node.js, and React — complete with seeded demo data and visual proof screenshots.
+
+---
+
+## 🚀 Features
+
+- Multi‑tenant architecture with isolated data per tenant  
+- Role‑based access control (Admin/User)  
+- Project and task management  
+- RESTful API with seeded demo data  
+- Dockerized backend, frontend, and database  
+- Visual proof of functionality via screenshots  
+
+---
+
+## 🧱 Tech Stack
+
+| Layer      | Technology           |
+|------------|----------------------|
+| Frontend   | React + React Router |
+| Backend    | Node.js + Express    |
+| Database   | PostgreSQL           |
+| Container  | Docker + Compose     |
+
+---
+
+## 🗂️ Folder Structure
+
+```
+multi-tenant-saas/
+├── backend/
+├── frontend/
+├── docs/
+│   ├── research.md
+│   ├── PRD.md
+│   ├── architecture.md
+│   ├── technical-spec.md
+│   ├── api-docs.md
+│   └── screenshots/
+├── docker-compose.yml
+├── .env
+├── .env.example
+└── README.md
+```
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/Jnaneswari19/multi-tenant-saas.git
+cd multi-tenant-saas
+```
+
+### 2. Create `.env` file
+```bash
+cp .env.example .env
+```
+
+### 3. Start Docker containers
+```bash
+docker-compose up --build
+```
+
+---
+
+## 🔐 Role-Based Access
+
+| Role   | Permissions                |
+|--------|----------------------------|
+| Admin  | Create/view projects/tasks |
+| User   | View only                  |
+
+---
+
+## 🌐 Ports
+
+- Backend → `http://localhost:5000`  
+- Frontend → `http://localhost:3000`  
+- Database → `localhost:5432`  
+
+---
+
+## 🖥️ Frontend Notes
+
+If you want to run the frontend separately (without Docker):
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+Runs at `http://localhost:3000`.  
+⚠️ Ensure backend is running at `http://localhost:5000`.
+
+---
+
+## 📚 Documentation
+
+- [Research Document](docs/research.md) → Multi‑tenancy analysis (800+ words), tech stack justification (500+ words), security considerations (400+ words).  
+- [Product Requirements Document (PRD)](docs/PRD.md) → User personas, 15+ functional requirements, 5+ non‑functional requirements.  
+- [Architecture Document](docs/architecture.md) → System architecture diagram, database ERD, API list with roles/authentication.  
+- [Technical Specification](docs/technical-spec.md) → Backend/frontend folder structure and development setup guide.  
+- [API Documentation](docs/api-docs.md) → All 19 endpoints with request/response examples and error cases.  
+
+---
+
+## 📸 Proof Screenshots
+
+- ✅ Docker Compose → ![Docker Compose](docs/screenshots/docker_running.png)  
+- ✅ Backend API → ![Tenants and Users](docs/screenshots/backend_api.png)  
+- ✅ Database Tables → ![Postgres Tables](docs/screenshots/db_tables.png)  
+- ✅ Frontend UI → ![Projects](docs/screenshots/projects_ui.png), ![Tasks](docs/screenshots/tasks_ui.png)  
+
+---
+
+## 🧪 Seeded Demo Data
+
+- Tenant: Demo Company  
+- Admin User: `admin@demo.com`  
+- Project: Demo Project  
+- Tasks: Demo Task 1, Demo Task 2  
+
+---
+
+## 🔮 Future Improvements
+
+- Multi‑tenant billing integration  
+- User invitation & onboarding flows  
+- Production‑ready Docker images  
+- CI/CD pipeline setup  
+
+---
+
+## 🧼 Cleanup
+
+```bash
+docker-compose down -v
+```
+
+---
+
+## 📄 License
+
+MIT License — free to use, modify, and distribute.
+
+---
+
+## 📬 Contact
+
+Built by **Jnaneswari**  
+Reach out for collaboration or feedback!
+```
+
+---
+
+
