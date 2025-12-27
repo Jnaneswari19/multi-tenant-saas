@@ -95,6 +95,63 @@ docker-compose up --build
 
 ---
 
+## 🔎 Typical Frontend README Content
+When you scaffold a React app (e.g., with `create-react-app`), the `frontend/README.md` usually contains boilerplate like:
+
+- How to run the app with `npm start`
+- How to build with `npm run build`
+- How to run tests with `npm test`
+- Notes about serving on `http://localhost:3000`
+
+Since your root README already covers Docker setup and ports, we only need to preserve **standalone frontend instructions** for developers who might want to run React outside Docker.
+
+---
+
+## ✅ Merged Section for Root README
+Add this to your root `README.md` under a new section:
+
+```markdown
+## 🖥️ Frontend Notes
+
+If you want to run the frontend separately (without Docker):
+
+1. Navigate to the frontend folder:
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm start
+   ```
+
+   The app will run at:
+   ```
+   http://localhost:3000
+   ```
+
+4. Build for production:
+   ```bash
+   npm run build
+   ```
+
+5. Run tests:
+   ```bash
+   npm test
+   ```
+
+> ⚠️ Note: When running standalone, ensure your backend is running at `http://localhost:5000` so the frontend can connect to the API.
+```
+
+
+---
+
+
 ## 📸 Proof Screenshots
 
 ### ✅ Docker Compose
