@@ -1,18 +1,22 @@
-const { Pool } = require('pg');
-const dotenv = require('dotenv');
-
+import pg from 'pg';
+import dotenv from 'dotenv';
 dotenv.config();
 
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+const { Pool } = pg;
+
+export const pool = new Pool({
+  host: process.env.DB_HOST || 'localhost',
+  port: Number(process.env.DB_PORT || 5432),
+  database: process.env.DB_NAME || 'saasdb',
+  user: process.env.DB_USER || 'postgres',
+  password: process.env.DB_PASSWORD || 'yourpassword'
 });
 
-pool.connect()
-  .then(() => console.log('✅ Connected to Postgres'))
-  .catch(err => console.error('❌ Postgres connection failed:', err));
+// Simple helper for queries
+export const query = (text, params) => pool.query(text, params);
 
-module.exports = pool;
+// Health check
+export async function healthCheck() {
+  const res = await query('SELECT 1');
+  return res.rowCount === 1;
+}

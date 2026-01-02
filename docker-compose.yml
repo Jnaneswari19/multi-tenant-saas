@@ -1,23 +1,7 @@
-version: "3.8"   # (this line can be removed, it's obsolete warning only)
+version: "3.8"
 
 services:
-  backend:
-    build: ./backend
-    ports:
-      - "5000:5000"
-    env_file:
-      - .env
-    depends_on:
-      - database   # 👈 must match DB_HOST in .env
-
-  frontend:
-    build: ./frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-
-  database:
+  db:
     image: postgres:16
     environment:
       POSTGRES_USER: postgres
@@ -27,6 +11,23 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d/
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
 
 volumes:
   pgdata:

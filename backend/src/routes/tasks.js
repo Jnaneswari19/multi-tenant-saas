@@ -1,20 +1,17 @@
-const express = require('express');
-const pool = require('../config/db');
+import express from 'express';
 const router = express.Router();
 
-// GET /api/tasks
-router.get('/tasks', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM tasks');
-    console.log('✅ Tasks query result:', result.rows);
-    res.json({ success: true, data: result.rows });
-  } catch (err) {
-    console.error('❌ Tasks query failed:', err);
-    res.status(500).json({
-      success: false,
-      message: err.message || 'Tasks query failed',
-    });
-  }
+let tasks = [];
+
+router.post('/', (req, res) => {
+  const { projectId, title, assignedTo } = req.body;
+  const newTask = { id: tasks.length + 1, projectId, title, assignedTo, status: 'open' };
+  tasks.push(newTask);
+  res.json({ success: true, task: newTask });
 });
 
-module.exports = router;
+router.get('/', (req, res) => {
+  res.json({ success: true, tasks });
+});
+
+export default router;

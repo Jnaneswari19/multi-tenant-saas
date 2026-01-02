@@ -1,11 +1,11 @@
-CREATE TABLE tenants (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+CREATE TABLE IF NOT EXISTS tenants (
+  id UUID PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  subdomain VARCHAR(255) UNIQUE NOT NULL,
-  status VARCHAR(20) CHECK (status IN ('active','suspended','trial')),
-  subscription_plan VARCHAR(20) CHECK (subscription_plan IN ('free','pro','enterprise')),
-  max_users INT,
-  max_projects INT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  subdomain VARCHAR(100) UNIQUE NOT NULL,
+  status VARCHAR(20) CHECK (status IN ('active','suspended','trial')) NOT NULL DEFAULT 'active',
+  subscription_plan VARCHAR(20) CHECK (subscription_plan IN ('free','pro','enterprise')) NOT NULL DEFAULT 'free',
+  max_users INTEGER NOT NULL DEFAULT 5,
+  max_projects INTEGER NOT NULL DEFAULT 3,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
 );

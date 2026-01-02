@@ -1,4 +1,4 @@
-// server.js
+// index.js
 const express = require('express');
 const cors = require('cors');
 
@@ -19,9 +19,7 @@ app.get('/api', (req, res) => {
   res.json({ message: 'Welcome to the Multi-Tenant SaaS API' });
 });
 
-// Import other routes if you have them
-// app.use('/api', require('./src/routes'));
-
+// Start server
 app.listen(PORT, () => {
   console.log(`Backend running on port ${PORT}`);
 });
