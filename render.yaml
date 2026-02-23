@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: backend
+    env: node
+    plan: free
+    buildCommand: "npm install"
+    startCommand: "node src/app.js"
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        value: postgres://user:pass@db:5432/app
+      - key: JWT_SECRET
+        value: your-secret-key
+      - key: CORS_ORIGIN
+        value: https://frontend-yourapp.netlify.app

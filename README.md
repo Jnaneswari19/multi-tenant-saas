@@ -118,6 +118,15 @@ The React frontend runs on **http://localhost:3000** and connects to backend API
 - RBAC enforced: user attempts to create → “Forbidden” response  
 
 ---
+## Live Deployment
+- Backend: https://backend-yourapp.onrender.com
+- Frontend: https://frontend-yourapp.netlify.app
+
+### Run Locally
+- `docker-compose up -d`
+- Backend → http://localhost:5000/api/health
+- Frontend → http://localhost:3000
+
 
 ## Conclusion
 This repository demonstrates a complete SaaS application with:
