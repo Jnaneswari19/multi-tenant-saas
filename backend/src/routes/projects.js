@@ -1,17 +1,29 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
 
-let projects = [];
-
+// Create Project
 router.post('/', (req, res) => {
-  const { name, description } = req.body;
-  const newProject = { id: projects.length + 1, name, description };
-  projects.push(newProject);
-  res.json({ success: true, project: newProject });
+  res.json({ message: 'Project created' });
 });
 
+// List Projects
 router.get('/', (req, res) => {
-  res.json({ success: true, projects });
+  res.json({ projects: [] });
 });
 
-export default router;
+// Get Project by ID
+router.get('/:id', (req, res) => {
+  res.json({ projectId: req.params.id });
+});
+
+// Update Project
+router.patch('/:id', (req, res) => {
+  res.json({ message: 'Project updated' });
+});
+
+// Delete Project
+router.delete('/:id', (req, res) => {
+  res.json({ message: 'Project deleted' });
+});
+
+module.exports = router;
