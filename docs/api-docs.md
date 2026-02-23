@@ -1,377 +1,126 @@
-
 # API Documentation
 
-All APIs return a consistent format:
+## Health
+### GET /api/health
+Returns service status.
+
+Response:
 ```json
-{
-  "success": true,
-  "message": "Description of result",
-  "data": { ... }
-}
+{ "status": "ok" }
 ```
 
 ---
 
-## 🔐 Authentication Endpoints
+## Auth Endpoints
+### POST /api/auth/register-tenant
+Registers a new tenant and admin user.
 
-### 1. Register Tenant
-**POST** `/api/auth/register-tenant`
-
-**Request:**
+Request:
 ```json
-{
-  "tenantName": "Demo Company",
-  "subdomain": "demo",
-  "adminEmail": "admin@demo.com",
-  "adminPassword": "Demo@123",
-  "adminFullName": "Demo Admin"
-}
+{ "name": "Tenant A", "subdomain": "tenant-a", "email": "admin@demo.com", "password": "Demo@123" }
 ```
 
-**Response (201):**
+Response:
 ```json
-{
-  "success": true,
-  "message": "Tenant registered successfully",
-  "data": {
-    "tenantId": "uuid",
-    "subdomain": "demo",
-    "adminUser": { "id": "uuid", "email": "admin@demo.com" },
-    "role": "tenant_admin"
-  }
-}
+{ "message": "Tenant registered successfully" }
 ```
 
-**Error (409):**
+### POST /api/auth/login
+Logs in user and returns JWT.
+
+Request:
 ```json
-{ "success": false, "message": "Subdomain or email already exists" }
+{ "email": "admin@demo.com", "password": "Demo@123" }
 ```
+
+Response:
+```json
+{ "token": "jwt-token", "user": { "id": 1, "role": "tenant_admin" } }
+```
+
+### POST /api/auth/refresh
+Refreshes JWT token.
+
+### GET /api/auth/me
+Returns current user info.
+
+### POST /api/auth/logout
+Logs out user.
 
 ---
 
-### 2. Login
-**POST** `/api/auth/login`
+## Tenants Endpoints
+### GET /api/tenants/:id
+Fetch tenant details.
 
-**Request:**
-```json
-{ "email": "admin@demo.com", "password": "Demo@123", "tenantSubdomain": "demo" }
-```
+### POST /api/tenants
+Create tenant (admin only).
 
-**Response (200):**
-```json
-{
-  "success": true,
-  "data": {
-    "user": { "id": "uuid", "role": "tenant_admin" },
-    "token": "jwt-token",
-    "expiresIn": 86400
-  }
-}
-```
+### PATCH /api/tenants/:id
+Update tenant info.
 
-**Error (401):**
-```json
-{ "success": false, "message": "Invalid credentials" }
-```
+### DELETE /api/tenants/:id
+Delete tenant.
+
+### GET /api/tenants/:id/limits
+Get subscription limits.
+
+### GET /api/tenants/:id/audit-logs
+Fetch tenant audit logs.
 
 ---
 
-### 3. Get Current User
-**GET** `/api/auth/me`
+## Users Endpoints
+### GET /api/users
+List all users.
 
-**Response (200):**
-```json
-{
-  "success": true,
-  "data": {
-    "id": "uuid",
-    "email": "admin@demo.com",
-    "role": "tenant_admin",
-    "tenant": { "id": "uuid", "name": "Demo Company" }
-  }
-}
-```
+### POST /api/users
+Create new user.
 
-**Error (404):**
-```json
-{ "success": false, "message": "User not found" }
-```
+### PATCH /api/users/:id
+Update user details.
+
+### DELETE /api/users/:id
+Deactivate user.
+
+### PATCH /api/users/:id/reactivate
+Reactivate user.
 
 ---
 
-### 4. Logout
-**POST** `/api/auth/logout`
+## Projects Endpoints
+### GET /api/projects
+List all projects.
 
-**Response (200):**
-```json
-{ "success": true, "message": "Logged out successfully" }
-```
+### POST /api/projects
+Create new project.
 
----
+### GET /api/projects/:id
+Fetch project details.
 
-## 🏢 Tenant Management
+### PATCH /api/projects/:id
+Update project.
 
-### 5. Get Tenant Details
-**GET** `/api/tenants/:id`
-
-**Response (200):**
-```json
-{
-  "success": true,
-  "data": {
-    "id": "uuid",
-    "name": "Demo Company",
-    "subdomain": "demo",
-    "status": "active",
-    "subscriptionPlan": "pro",
-    "maxUsers": 25,
-    "maxProjects": 15,
-    "stats": { "totalUsers": 5, "totalProjects": 2, "totalTasks": 10 }
-  }
-}
-```
-
-**Error (403):**
-```json
-{ "success": false, "message": "Unauthorized access" }
-```
+### DELETE /api/projects/:id
+Delete project.
 
 ---
 
-### 6. Update Tenant
-**PUT** `/api/tenants/:id`
+## Tasks Endpoints
+### GET /api/projects/:projectId/tasks
+List tasks for project.
 
-**Request:**
-```json
-{ "name": "Updated Company Name" }
-```
+### POST /api/projects/:projectId/tasks
+Create new task.
 
-**Response (200):**
-```json
-{ "success": true, "message": "Tenant updated successfully" }
-```
+### PATCH /api/tasks/:id
+Update task.
 
-**Error (403):**
-```json
-{ "success": false, "message": "Tenant admin cannot update subscription plan" }
-```
+### DELETE /api/tasks/:id
+Delete task.
+
+### GET /api/tasks/:id/audit-logs
+Fetch task audit logs.
 
 ---
 
-### 7. List All Tenants
-**GET** `/api/tenants` (super_admin only)
-
-**Response (200):**
-```json
-{
-  "success": true,
-  "data": {
-    "tenants": [
-      { "id": "uuid", "name": "Demo Company", "status": "active", "subscriptionPlan": "pro" }
-    ],
-    "pagination": { "currentPage": 1, "totalPages": 5 }
-  }
-}
-```
-
-**Error (403):**
-```json
-{ "success": false, "message": "Only super_admin can list all tenants" }
-```
-
----
-
-## 👥 User Management
-
-### 8. Add User
-**POST** `/api/tenants/:id/users`
-
-**Request:**
-```json
-{ "email": "newuser@demo.com", "password": "NewUser@123", "fullName": "New User", "role": "user" }
-```
-
-**Response (201):**
-```json
-{ "success": true, "message": "User created successfully", "data": { "id": "uuid", "email": "newuser@demo.com" } }
-```
-
-**Error (409):**
-```json
-{ "success": false, "message": "Email already exists in this tenant" }
-```
-
----
-
-### 9. List Users
-**GET** `/api/tenants/:id/users`
-
-**Response (200):**
-```json
-{
-  "success": true,
-  "data": {
-    "users": [
-      { "id": "uuid", "email": "admin@demo.com", "role": "tenant_admin" },
-      { "id": "uuid", "email": "user1@demo.com", "role": "user" }
-    ]
-  }
-}
-```
-
-**Error (403):**
-```json
-{ "success": false, "message": "Unauthorized to view users of another tenant" }
-```
-
----
-
-### 10. Update User
-**PUT** `/api/users/:id`
-
-**Request:**
-```json
-{ "fullName": "Updated User Name", "isActive": true }
-```
-
-**Response (200):**
-```json
-{ "success": true, "message": "User updated successfully" }
-```
-
-**Error (403):**
-```json
-{ "success": false, "message": "You cannot update another tenant's user" }
-```
-
----
-
-### 11. Delete User
-**DELETE** `/api/users/:id`
-
-**Response (200):**
-```json
-{ "success": true, "message": "User deleted successfully" }
-```
-
-**Error (403):**
-```json
-{ "success": false, "message": "Tenant admin cannot delete themselves" }
-```
-
----
-
-## 📂 Project Management
-
-### 12. Create Project
-**POST** `/api/projects`
-
-**Request:**
-```json
-{ "name": "Website Redesign", "description": "Complete redesign of company site" }
-```
-
-**Response (201):**
-```json
-{ "success": true, "data": { "id": "uuid", "name": "Website Redesign", "status": "active" } }
-```
-
-**Error (403):**
-```json
-{ "success": false, "message": "Project limit reached for current subscription plan" }
-```
-
----
-
-### 13. List Projects
-**GET** `/api/projects`
-
-**Response (200):**
-```json
-{
-  "success": true,
-  "data": {
-    "projects": [
-      { "id": "uuid", "name": "Website Redesign", "status": "active", "taskCount": 5 }
-    ]
-  }
-}
-```
-
-**Error (404):**
-```json
-{ "success": false, "message": "No projects found for this tenant" }
-```
-
----
-
-### 14. Update Project
-**PUT** `/api/projects/:id`
-
-**Request:**
-```json
-{ "status": "archived" }
-```
-
-**Response (200):**
-```json
-{ "success": true, "message": "Project updated successfully" }
-```
-
-**Error (403):**
-```json
-{ "success": false, "message": "Only tenant_admin or project creator can update project" }
-```
-
----
-
-### 15. Delete Project
-**DELETE** `/api/projects/:id`
-
-**Response (200):**
-```json
-{ "success": true, "message": "Project deleted successfully" }
-```
-
-**Error (404):**
-```json
-{ "success": false, "message": "Project not found" }
-```
-
----
-
-## ✅ Task Management
-
-### 16. Create Task
-**POST** `/api/projects/:id/tasks`
-
-**Request:**
-```json
-{ "title": "Design homepage mockup", "priority": "high", "dueDate": "2024-07-15" }
-```
-
-**Response (201):**
-```json
-{ "success": true, "data": { "id": "uuid", "title": "Design homepage mockup", "status": "todo" } }
-```
-
-**Error (400):**
-```json
-{ "success": false, "message": "Assigned user does not belong to this tenant" }
-```
-
----
-
-### 17. List Tasks
-**GET** `/api/projects/:id/tasks`
-
-**Response (200):**
-```json
-{
-  "success": true,
-  "data": {
-    "tasks": [
-      { "id": "uuid", "title": "Design homepage mockup", "status": "todo" },
-      { "id": "uuid", "title": "Implement login page", "status": "in_progress" }
-    ]
-  }
