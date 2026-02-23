@@ -1,13 +1,22 @@
 # User Personas
 
 ## Super Admin
-(Role, responsibilities, goals, pain points)
+- **Role:** Manages global platform.
+- **Responsibilities:** Approve tenants, monitor system health.
+- **Goals:** Ensure uptime, compliance.
+- **Pain Points:** Needs visibility across all tenants.
 
 ## Tenant Admin
-(Role, responsibilities, goals, pain points)
+- **Role:** Manages tenant-specific users and projects.
+- **Responsibilities:** Invite users, assign roles, manage subscription.
+- **Goals:** Efficient team management.
+- **Pain Points:** Needs easy onboarding and clear limits.
 
 ## End User
-(Role, responsibilities, goals, pain points)
+- **Role:** Works on projects and tasks.
+- **Responsibilities:** Create/update tasks, collaborate.
+- **Goals:** Simple UI, fast performance.
+- **Pain Points:** Avoid complexity, ensure data security.
 
 ---
 
@@ -43,6 +52,7 @@
 ---
 
 # Non-Functional Requirements
+
 - NFR-001: API median response time <200ms for 90% of requests.
 - NFR-002: All passwords hashed with Argon2/bcrypt.
 - NFR-003: Support ≥100 concurrent users per tenant.
